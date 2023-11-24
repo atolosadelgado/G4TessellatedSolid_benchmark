@@ -1,0 +1,4 @@
+/geometry/test/tolerance 0 um
+/geometry/test/resolution 50000
+/geometry/test/run
+exit
