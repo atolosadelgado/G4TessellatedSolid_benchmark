@@ -1,0 +1,6 @@
+bin theta	bin phi	total vertex	time 1k evt	time startup	total time
+50	50	2500	1.06	4.2	5.26
+500	50	25000	14.03	13.4	27.43
+1000	50	50000	30.77	40.6	71.37
+1000	100	100000	56.4	149.4	205.8
+

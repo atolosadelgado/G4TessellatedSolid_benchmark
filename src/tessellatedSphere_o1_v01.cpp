@@ -62,7 +62,7 @@ TessellatedSolid create_sphere(double R = 1, int nthetatotal = 50, int nphitotal
 
 
   std::cout << "\t ++ Total number of vertex = " << vertices.size() << "\n";
-  std::cin.ignore();
+  // std::cin.ignore();
 
   // define facets
   TessellatedSolid shape("kk", vertices);
@@ -114,16 +114,45 @@ static Ref_t TessellatedSphere(Detector &desc, xml::Handle_t handle, SensitiveDe
   int detID = detElem.id();
   DetElement det(detName, detID);
   sens.setType("tracker");
-
+  double radius_of_the_sphere = 1*cm;
   // Vessel
-  auto shape = create_sphere();
-  Volume vesselVol(detName, shape, desc.material("Aluminum"));
+  auto shape = create_sphere(radius_of_the_sphere,100,100);
+  Volume sphereVol(detName, shape, desc.material("Aluminum"));
+  sphereVol.setVisAttributes( "aerogel_vis" );
+  sphereVol.setSensitiveDetector(sens);
+
+
+  double separation = 0.1*radius_of_the_sphere;
+  double dpos = 2*radius_of_the_sphere+separation;
+  int nshapes = 6;
+  int cellCounter = 0;
+  Assembly mytest_assembly("mytest_assembly");
+
+  for(int ix=-nshapes/2; ix<nshapes/2; ++ix)
+  {
+    for(int iy=-nshapes/2; iy<nshapes/2; ++iy)
+    {
+      for(int iz=-nshapes/2; iz<nshapes/2; ++iz)
+      {
+        // skip central sphere at 000
+        if( (ix==0)&&(iy==0)&&(iz==0) ) continue;
+        PlacedVolume spherePV = mytest_assembly.placeVolume(sphereVol, Position( dpos*ix, dpos*iy, dpos*iz));
+        spherePV.addPhysVolID("system", detID);
+        spherePV.addPhysVolID("modx", ix);
+        spherePV.addPhysVolID("mody", iy);
+        spherePV.addPhysVolID("modz", iz);
+        ++cellCounter;
+        DetElement cellDE(det, "DE"+std::to_string(cellCounter), 3 * cellCounter);
+        cellDE.setPlacement(spherePV);
+      }
+    }
+  }
 
   // place mother volume (vessel)
   Volume motherVol = desc.pickMotherVolume(det);
-  PlacedVolume vesselPV = motherVol.placeVolume(vesselVol, Position(0, 0, 0));
-  vesselPV.addPhysVolID("system", detID);
-  det.setPlacement(vesselPV);
+  auto mytest_assemblyPV = motherVol.placeVolume(mytest_assembly);
+  det.setPlacement(mytest_assemblyPV);
+
 
   return det;
 }

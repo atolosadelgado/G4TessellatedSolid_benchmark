@@ -36,3 +36,4 @@ To show materials in along a given line (in this case from (0,0,-10)cm to (100,0
 ```bash
 materialScan compact/tessellatedSphere_o1_v01.xml 0 0 -10 100 0 90
 ```
+ddsim --compactFile ./compact/tessellatedSphere_o1_v01.xml -N 10 -G --gun.particle geantino --gun.distribution 'cos(theta)' --gun.thetaMin "0" --gun.thetaMax "1.57*rad" --gun.phiMin "0" --gun.phiMax "1.57*rad" --gun.position "0 0 0" --filter.calo "" --filter.tracker ""  --random.seed 1 --outputFile ts_geantino_distcostheta.root  --part.userParticleHandler=''

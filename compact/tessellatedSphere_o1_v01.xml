@@ -45,7 +45,7 @@
 </display>
 
 <define>
-  <constant name="world_side"             value="1*m"      />
+  <constant name="world_side"             value="10*m"      />
   <constant name="world_x"                value="world_side"/>
   <constant name="world_y"                value="world_side"/>
   <constant name="world_z"                value="world_side"/>
@@ -74,7 +74,7 @@
       offset_x="-0.5*(100-1)*0.8*mm"
       offset_y="-0.5*(100-1)*0.8*mm"
       />
-    <id>system:8,module:12,x:32:-16,y:-16</id>  </readout>
+    <id>system:8,modx:3,mody:3,modz:3,x:32:-16,y:-16</id>  </readout>
 </readouts>
 
 </lccdd>
