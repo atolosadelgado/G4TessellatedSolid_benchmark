@@ -18,7 +18,7 @@ YourPrimaryGeneratorAction::YourPrimaryGeneratorAction( YourDetectorConstruction
 
   fGun->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
   fGun->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(0,0,0));
-  fGun->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+
 
 
 }
