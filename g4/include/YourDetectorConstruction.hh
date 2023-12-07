@@ -36,7 +36,7 @@ private:
    G4double      fSeparation;
 
    // number of solids
-   G4int      fNSolids = {10};
+   G4int      fNSolids = {5};
 
    // target physicial volume
    G4VPhysicalVolume* fTargetPhysicalV;
