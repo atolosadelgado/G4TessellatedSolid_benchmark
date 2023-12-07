@@ -25,11 +25,11 @@ void OrbTessellated(G4TessellatedSolid * shape, double R = 1, int nthetatotal = 
     double x;
     double y;
     double z;
-    void SetCoordinates(double R, double theta, double phi)
+    void SetCoordinates(double R, double _theta, double _phi)
     {
-      x = R*sin(theta)*cos(phi);
-      y = R*sin(theta)*sin(phi);
-      z = R*cos(theta);
+      x = R*sin(_theta)*cos(_phi);
+      y = R*sin(_theta)*sin(_phi);
+      z = R*cos(_theta);
     }
   };
 
@@ -148,13 +148,15 @@ G4VPhysicalVolume* YourDetectorConstruction::Construct() {
   {
     targetSolid = new G4TessellatedSolid("solid-target");
 
-    if( shape::sphere == fShape) OrbTessellated( (G4TessellatedSolid*)targetSolid, 0.5*fSize, sqrt(fNVertex), sqrt(fNVertex) );
-    if( shape::cube == fShape)   throw std::runtime_error("Not yet ready :)");
+    if( shape::sphere == fShape)      OrbTessellated( (G4TessellatedSolid*)targetSolid, 0.5*fSize, sqrt(fNVertex), sqrt(fNVertex) );
+    else if( shape::cube == fShape)   throw std::runtime_error("Not yet ready :)");
+    else                              throw std::runtime_error("Shape is not valid");
   }
   else
   {
-    if( shape::sphere == fShape) targetSolid = new G4Orb("solid-target", 0.5*fSize);
-    if( shape::cube == fShape)   targetSolid = new G4Box("solid-target", 0.5*fSize, 0.5*fSize, 0.5*fSize);
+    if( shape::sphere == fShape)      targetSolid = new G4Orb("solid-target", 0.5*fSize);
+    else if( shape::cube == fShape)   targetSolid = new G4Box("solid-target", 0.5*fSize, 0.5*fSize, 0.5*fSize);
+    else                              throw std::runtime_error("Shape is not valid");
   }
   G4LogicalVolume* targetLogical = new G4LogicalVolume(targetSolid, matWorld, "logic-target");
 
