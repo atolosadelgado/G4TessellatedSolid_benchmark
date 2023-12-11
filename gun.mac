@@ -1,0 +1,6 @@
+/gps/particle geantino
+/gps/position 0 0 0 cm
+/gps/number 1
+/gps/pos/type Point
+/gps/ang/type iso
+/run/beamOn 1000
